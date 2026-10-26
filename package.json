@@ -1,7 +1,7 @@
 {
-  "name": "cinny",
+  "name": "vertex-web",
   "version": "4.12.8",
-  "description": "Yet another matrix client",
+  "description": "A Matrix client for the korfex team, based on Cinny",
   "main": "index.js",
   "type": "module",
   "engines": {
@@ -30,7 +30,10 @@
     }
   },
   "keywords": [],
-  "author": "Ajay Bura",
+  "author": "Korfex Softworks",
+  "contributors": [
+    "Ajay Bura (original Cinny author)"
+  ],
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "1.1.6",
