@@ -4,7 +4,7 @@ import { Page, PageContent, PageHeader } from '../../../components/page';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../styles.css';
 import { SettingTile } from '../../../components/setting-tile';
-import CinnySVG from '../../../../../public/res/svg/cinny.svg';
+import VertexSVG from '../../../../../public/res/svg/vertex.svg';
 import { clearCacheAndReload } from '../../../../client/initMatrix';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 
@@ -38,23 +38,23 @@ export function About({ requestClose }: AboutProps) {
                 <Box shrink="No">
                   <img
                     style={{ width: toRem(60), height: toRem(60) }}
-                    src={CinnySVG}
-                    alt="Cinny logo"
+                    src={VertexSVG}
+                    alt="Vertex logo"
                   />
                 </Box>
                 <Box direction="Column" gap="300">
                   <Box direction="Column" gap="100">
                     <Box gap="100" alignItems="End">
-                      <Text size="H3">Cinny</Text>
+                      <Text size="H3">Vertex</Text>
                       <Text size="T200">v4.12.8</Text>
                     </Box>
-                    <Text>Yet another matrix client.</Text>
+                    <Text>A Matrix client for the korfex team, based on Cinny.</Text>
                   </Box>
 
                   <Box gap="200" wrap="Wrap">
                     <Button
                       as="a"
-                      href="https://github.com/cinnyapp/cinny"
+                      href="https://github.com/korfex/vertex-web"
                       rel="noreferrer noopener"
                       target="_blank"
                       variant="Secondary"
@@ -67,16 +67,16 @@ export function About({ requestClose }: AboutProps) {
                     </Button>
                     <Button
                       as="a"
-                      href="https://cinny.in/#sponsor"
+                      href="https://github.com/cinnyapp/cinny"
                       rel="noreferrer noopener"
                       target="_blank"
-                      variant="Critical"
+                      variant="Secondary"
                       fill="Soft"
                       size="300"
                       radii="300"
-                      before={<Icon src={Icons.Heart} size="100" filled />}
+                      before={<Icon src={Icons.External} size="100" />}
                     >
-                      <Text size="B300">Support</Text>
+                      <Text size="B300">Based on Cinny</Text>
                     </Button>
                   </Box>
                 </Box>

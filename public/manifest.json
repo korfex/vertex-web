@@ -1,7 +1,7 @@
 {
-  "name": "Cinny",
-  "short_name": "Cinny",
-  "description": "Yet another matrix client",
+  "name": "Vertex",
+  "short_name": "Vertex",
+  "description": "A Matrix client for the korfex team",
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",
