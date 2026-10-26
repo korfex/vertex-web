@@ -90,7 +90,7 @@ export function CreateRoomForm({
   const allowAdditionalCreators = creatorsSupported(selectedRoomVersion);
   const { additionalCreators, addAdditionalCreator, removeAdditionalCreator } =
     useAdditionalCreators();
-  const [federation, setFederation] = useState(true);
+  const [federation, setFederation] = useState(false);
   const [encryption, setEncryption] = useState(false);
   const [knock, setKnock] = useState(false);
   const [advance, setAdvance] = useState(false);

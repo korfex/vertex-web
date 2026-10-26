@@ -78,6 +78,16 @@ const createSpacePowerLevelsOverride = () => ({
   events_default: 50,
 });
 
+/**
+ * Creation content for a DM: federation is disabled when every invitee is on
+ * our own homeserver, and left enabled otherwise so remote users can still join.
+ */
+export const createDMCreationContent = (mx: MatrixClient, userIds: string[]): object => {
+  const ownServer = getMxIdServer(mx.getSafeUserId());
+  const allLocal = userIds.every((userId) => getMxIdServer(userId) === ownServer);
+  return createRoomCreationContent(undefined, !allLocal, undefined);
+};
+
 export const createRoomEncryptionState = () => ({
   type: 'm.room.encryption',
   state_key: '',

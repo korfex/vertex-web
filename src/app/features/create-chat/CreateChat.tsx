@@ -9,7 +9,7 @@ import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { AsyncStatus, useAsyncCallback } from '../../hooks/useAsyncCallback';
 import { ErrorCode } from '../../cs-errorcode';
 import { millisecondsToMinutes } from '../../utils/common';
-import { createRoomEncryptionState } from '../../components/create-room';
+import { createDMCreationContent, createRoomEncryptionState } from '../../components/create-room';
 import { useAlive } from '../../hooks/useAlive';
 import { getDirectRoomPath } from '../../pages/pathUtils';
 
@@ -37,6 +37,7 @@ export function CreateChat({ defaultUserId }: CreateChatProps) {
           visibility: Visibility.Private,
           preset: Preset.TrustedPrivateChat,
           initial_state: initialState,
+          creation_content: createDMCreationContent(mx, [userId]),
         });
 
         addRoomIdToMDirect(mx, result.room_id, userId);

@@ -26,7 +26,7 @@ import { useRoomNavigate } from './useRoomNavigate';
 import { Membership, StateEvent } from '../../types/matrix/room';
 import { getStateEvent } from '../utils/room';
 import { splitWithSpace } from '../utils/common';
-import { createRoomEncryptionState } from '../components/create-room';
+import { createDMCreationContent, createRoomEncryptionState } from '../components/create-room';
 
 export const SHRUG = '¯\\_(ツ)_/¯';
 export const TABLEFLIP = '(╯°□°)╯︵ ┻━┻';
@@ -219,6 +219,7 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
             visibility: Visibility.Private,
             preset: Preset.TrustedPrivateChat,
             initial_state: [createRoomEncryptionState()],
+            creation_content: createDMCreationContent(mx, userIds),
           });
           addRoomIdToMDirect(mx, result.room_id, userIds[0]);
           navigateRoom(result.room_id);
