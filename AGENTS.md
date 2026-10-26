@@ -7,7 +7,7 @@ find them useful too; [CONTRIBUTING.md](CONTRIBUTING.md) still applies.
 
 Vertex is the korfex team's Matrix web client, a fork of
 [Cinny](https://github.com/cinnyapp/cinny). Upstream is fetched from the
-`upstream` remote and merged in from time to time, so keep diffs against
+`upstream` remote and brought in from time to time, so keep diffs against
 upstream small:
 
 - Don't reformat, rename or reorder code you aren't otherwise changing.
@@ -82,5 +82,7 @@ this section with how to run them when they land.
   request titles are checked in CI.
 - Sign off every commit (`git commit -s`) per the DCO in CONTRIBUTING.md.
 - Group related changes into separate commits, and keep each commit building.
-- Merges of upstream pull requests keep the original commits; put fixes in a
-  separate follow-up commit.
+- Keep history linear: rebase instead of creating merge commits.
+- To bring in an upstream pull request, cherry-pick its commits with
+  `git cherry-pick -x -s` so the original authors stay visible, then put fixes
+  in a separate follow-up commit that links the pull request.
