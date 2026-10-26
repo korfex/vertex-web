@@ -21,7 +21,7 @@ export function AuthFooter() {
         target="_blank"
         rel="noreferrer"
       >
-        v4.12.8
+        v4.13.0
       </Text>
       <Text
         as="a"

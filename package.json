@@ -1,6 +1,6 @@
 {
   "name": "vertex-web",
-  "version": "4.12.8",
+  "version": "4.13.0",
   "description": "A Matrix client for the korfex team, based on Cinny",
   "main": "index.js",
   "type": "module",

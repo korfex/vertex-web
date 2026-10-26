@@ -46,7 +46,7 @@ export function About({ requestClose }: AboutProps) {
                   <Box direction="Column" gap="100">
                     <Box gap="100" alignItems="End">
                       <Text size="H3">Vertex</Text>
-                      <Text size="T200">v4.12.8</Text>
+                      <Text size="T200">v4.13.0</Text>
                     </Box>
                     <Text>A Matrix client for the korfex team, based on Cinny.</Text>
                   </Box>
