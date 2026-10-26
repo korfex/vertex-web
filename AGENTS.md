@@ -35,7 +35,7 @@ columns, single quotes); lint rules are in `.eslintrc.cjs` (Airbnb-based).
 
 Write few comments. The default is none.
 
-- Comment only to explain *why*: a non-obvious constraint, a workaround, a
+- Comment only to explain _why_: a non-obvious constraint, a workaround, a
   spec or server quirk. Link the issue or spec section when there is one.
 - Don't restate what the code does, and don't label obvious blocks
   (`// Handle submit`, `// State`, `// Render`).
