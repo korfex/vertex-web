@@ -18,7 +18,7 @@ import {
   color,
 } from 'folds';
 import FocusTrap from 'focus-trap-react';
-import { PasswordDict, IAuthData, MatrixClient, MatrixError } from 'matrix-js-sdk';
+import { AuthDict, IAuthData, MatrixError } from 'matrix-js-sdk';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../styles.css';
 import { SettingTile } from '../../../components/setting-tile';
@@ -61,34 +61,25 @@ export function ChangePassword() {
 
   if (disableChangePassword) {
     return (
-      <>
-        <Box direction="Column" gap="100">
-          <Text size="L400">Account Security</Text>
-          <SequenceCard
-            className={SequenceCardStyle}
-            variant="SurfaceVariant"
-            direction="Column"
-            gap="400"
-          >
-            <SettingTile
-              title="Password"
-              description="Contact your homeserver's administrator to change your password."
-              after={
-                <Button
-                  size="400"
-                  variant="Secondary"
-                  fill="Soft"
-                  outlined
-                  radii="300"
-                  disabled="True"
-                >
-                  <Text size="B400">Change</Text>
-                </Button>
-              }
-            />
-          </SequenceCard>
-        </Box>
-      </>
+      <Box direction="Column" gap="100">
+        <Text size="L400">Account Security</Text>
+        <SequenceCard
+          className={SequenceCardStyle}
+          variant="SurfaceVariant"
+          direction="Column"
+          gap="400"
+        >
+          <SettingTile
+            title="Password"
+            description="Contact your homeserver's administrator to change your password."
+            after={
+              <Button size="400" variant="Secondary" fill="Soft" outlined radii="300" disabled>
+                <Text size="B400">Change</Text>
+              </Button>
+            }
+          />
+        </SequenceCard>
+      </Box>
     );
   }
 
@@ -134,28 +125,31 @@ function ChangePasswordForm({ onCancel, onSuccess }: ChangePasswordFormProps) {
   const [changePasswordState, attemptPasswordChange] = useAsyncCallback<
     ChangePasswordResult,
     Error,
-    [AuthDict | null, string, boolean]
+    [AuthDict | undefined, string, boolean]
   >(
-    useCallback(async (authDict, newPassword, logoutDevices) => {
-      // For the initial request, pass undefined instead of null
-      // This ensures the auth field is omitted from the request body
-      const [err, res] = await to<ChangePasswordResponse, MatrixError>(
-        mx.setPassword(authDict, newPassword, logoutDevices)
-      );
+    useCallback(
+      async (authDict, newPassword, logoutDevices) => {
+        // For the initial request, pass undefined instead of null
+        // This ensures the auth field is omitted from the request body
+        const [err, res] = await to<ChangePasswordResponse, MatrixError>(
+          mx.setPassword(authDict as AuthDict, newPassword, logoutDevices)
+        );
 
-      if (err) {
-        console.error('Password change error:', err.httpStatus, err.data);
-        // If we get a 401, it means we need to perform UIA
-        if (err.httpStatus === 401) {
-          const authData = err.data as IAuthData;
-          return [authData, undefined];
+        if (err) {
+          console.error('Password change error:', err.httpStatus, err.data);
+          // If we get a 401, it means we need to perform UIA
+          if (err.httpStatus === 401) {
+            const authData = err.data as IAuthData;
+            return [authData, undefined];
+          }
+          // Any other error should be thrown
+          throw err;
         }
-        // Any other error should be thrown
-        throw err;
-      }
 
-      return [undefined, res];
-    }, [mx])
+        return [undefined, res];
+      },
+      [mx]
+    )
   );
 
   const [ongoingAuthData, changePasswordResult] =
@@ -221,7 +215,8 @@ function ChangePasswordForm({ onCancel, onSuccess }: ChangePasswordFormProps) {
   }
 
   const isLoading = changePasswordState.status === AsyncStatus.Loading;
-  const error = changePasswordState.status === AsyncStatus.Error ? changePasswordState.error : undefined;
+  const error =
+    changePasswordState.status === AsyncStatus.Error ? changePasswordState.error : undefined;
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
 
@@ -240,7 +235,7 @@ function ChangePasswordForm({ onCancel, onSuccess }: ChangePasswordFormProps) {
     // Try to set password without authentication.
     // Response will contain authData for UIA to proceed.
     // TODO: is there ANY way to do UIA before asking the user for their new password?
-    attemptPasswordChange(null, newPassword, logoutDevices);
+    attemptPasswordChange(undefined, newPassword, logoutDevices);
   };
 
   return (
@@ -271,7 +266,7 @@ function ChangePasswordForm({ onCancel, onSuccess }: ChangePasswordFormProps) {
             >
               <Box direction="Column" gap="400">
                 <Text size="T200">
-                  Enter your current password and a new password.
+                  Enter a new password. You will be asked for your current password next.
                 </Text>
 
                 <ConfirmPasswordMatch initialValue>
@@ -303,7 +298,7 @@ function ChangePasswordForm({ onCancel, onSuccess }: ChangePasswordFormProps) {
                 <Box direction="Column" gap="100">
                   <Box alignItems="Center" gap="200">
                     <Checkbox id="logoutDevices" name="logoutDevices" defaultChecked />
-                    <Text as="label" size="T300">
+                    <Text as="label" htmlFor="logoutDevices" size="T300">
                       Logout other devices
                     </Text>
                   </Box>
